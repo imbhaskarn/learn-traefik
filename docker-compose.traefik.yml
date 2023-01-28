@@ -1,0 +1,32 @@
+services:
+
+  traefik:
+    image: traefik:latest
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080
+      - traefik.http.routers.traefik-dashboard-http.entrypoints=http
+      - traefik.http.routers.traefik-dashboard-http.rule=Host(`dash.localhost`)
+      - traefik.docker.network=towapp
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command:
+      - --providers.docker
+      - --api.insecure 
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.http.address=:80
+      - --accesslog
+      - --log
+      - --api
+    networks:
+      - towapp
+volumes:
+  towapp-certificates:
+
+networks:
+  towapp:
+    external: true
