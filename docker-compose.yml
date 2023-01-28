@@ -1,0 +1,39 @@
+services:
+
+  first:
+    restart: always
+    container_name: first
+    build:
+      context: ./first
+      dockerfile: Dockerfile
+    labels:
+      - traefik.enable=true
+      - api.insecure=true
+      - traefik.http.services.app.loadbalancer.server.port=8081
+      - traefik.http.routers.first.entrypoints=http
+      - traefik.http.routers.first.rule=Host(`one.localhost`)
+      - traefik.docker.network=towapp
+    command: [ "node", "app.js" ]
+    networks:
+      - towapp
+
+  second:
+    restart: always
+    container_name: second
+    build:
+      context: ./second
+      dockerfile: Dockerfile
+    labels:
+      - traefik.enable=true
+      - api.insecure=true
+      - traefik.http.services.app.loadbalancer.server.port=8082
+      - traefik.http.routers.app-http.entrypoints=http
+      - traefik.http.routers.app-http.rule=Host(`two.localhost`)
+      - traefik.docker.network=towapp
+    command: [ "node", "server.js" ]
+    networks:
+      - towapp
+
+networks:
+  towapp:
+    external: true
