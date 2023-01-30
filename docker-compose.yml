@@ -19,7 +19,7 @@ services:
       # Make Traefik use this domain in HTTPS
       - traefik.http.routers.first-https.entrypoints=https
       - traefik.http.routers.first-https.rule=Host(`first.ibhaskar.com`)
-      - traefik.http.routers.app-https.tls=true
+      - traefik.http.routers.first-https.tls=true
       # Use the "le" (Let's Encrypt) resolver
       - traefik.http.routers.first-https.tls.certresolver=le
       # https-redirect middleware to redirect HTTP to HTTPS
@@ -52,7 +52,7 @@ services:
       # Make Traefik use this domain in HTTPS
       - traefik.http.routers.second-https.entrypoints=https
       - traefik.http.routers.second-https.rule=Host(`second.ibhaskar.com`)
-      - traefik.http.routers.app-https.tls=true
+      - traefik.http.routers.second-https.tls=true
       # Use the "le" (Let's Encrypt) resolver
       - traefik.http.routers.second-https.tls.certresolver=le
       # https-redirect middleware to redirect HTTP to HTTPS
