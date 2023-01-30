@@ -10,7 +10,7 @@ services:
       # Enable Traefik for this specific "backend" service
       - traefik.enable=true
       # Define the port inside of the Docker service to use
-      - traefik.http.services.firstapp.loadbalancer.server.port=8081
+      - traefik.http.services.first.loadbalancer.server.port=8081
       # Make Traefik use this domain in HTTP
       - traefik.http.routers.first-http.entrypoints=http
       - traefik.http.routers.first-http.rule=Host(`first.ibhaskar.com`)
@@ -43,7 +43,7 @@ services:
       # Enable Traefik for this specific "backend" service
       - traefik.enable=true
       # Define the port inside of the Docker service to use
-      - traefik.http.services.secondapp.loadbalancer.server.port=8082
+      - traefik.http.services.second.loadbalancer.server.port=8082
       # Make Traefik use this domain in HTTP
       - traefik.http.routers.second-http.entrypoints=http
       - traefik.http.routers.second-http.rule=Host(`second.ibhaskar.com`)
