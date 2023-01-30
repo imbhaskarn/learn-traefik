@@ -11,14 +11,14 @@ services:
       - api.insecure=true
       - traefik.http.services.app.loadbalancer.server.port=8081
       - traefik.http.routers.first-http.entrypoints=http
-      - traefik.http.routers.first-http.rule=Host(`first.codewiser.online`)
+      - traefik.http.routers.first-http.rule=Host(`first.ibhaskar.com`)
       # configure https
       - traefik.http.routers.first-https.entrypoints=https
       - traefik.http.routers.first-https.rule=Host(`first.ibhaskar.com`)
       - traefik.http.routers.first-https.tls=true
       - traefik.http.routers.first-https.tls.certresolver=le
-      - traefik.http.first-middlewares.https-redirect.redirectscheme.scheme=https
-      - traefik.http.first-middlewares.https-redirect.redirectscheme.permanent=true
+      - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
       # Middleware to redirect HTTP to HTTPS
       - traefik.http.routers.app-http.middlewares=https-redirect
       - traefik.docker.network=towapp
