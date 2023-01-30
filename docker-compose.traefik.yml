@@ -41,7 +41,7 @@ services:
     networks:
       - towapp
 volumes:
-  towapp-certificates:
+  traefik-public-certificates:
 
 
 networks:
