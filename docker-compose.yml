@@ -21,7 +21,7 @@ services:
       - traefik.http.routers.first-https.rule=Host(`first.ibhaskar.com`)
       - traefik.http.routers.first-https.tls=true
       # Use the "le" (Let's Encrypt) resolver
-      - traefik.http.routers.first-https.tls.certresolver=lf
+      - traefik.http.routers.first-https.tls.certresolver=le
       # https-redirect middleware to redirect HTTP to HTTPS
       - traefik.http.middlewares.first-https-redirect.redirectscheme.scheme=https
       - traefik.http.middlewares.first-https-redirect.redirectscheme.permanent=true
