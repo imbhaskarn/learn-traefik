@@ -15,7 +15,6 @@ services:
       - traefik.http.routers.first-http.entrypoints=http
       - traefik.http.routers.first-http.rule=Host(`first.ibhaskar.com`)
       # Use the traefik-public network (declared below)
-      - traefik.docker.network=traefik-public
       # Make Traefik use this domain in HTTPS
       - traefik.http.routers.first-https.entrypoints=https
       - traefik.http.routers.first-https.rule=Host(`first.ibhaskar.com`)
@@ -48,7 +47,6 @@ services:
       - traefik.http.routers.second-http.entrypoints=http
       - traefik.http.routers.second-http.rule=Host(`second.ibhaskar.com`)
       # Use the traefik-public network (declared below)
-      - traefik.docker.network=traefik-public
       # Make Traefik use this domain in HTTPS
       - traefik.http.routers.second-https.entrypoints=https
       - traefik.http.routers.second-https.rule=Host(`second.ibhaskar.com`)
