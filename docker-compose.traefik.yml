@@ -1,49 +1,50 @@
-  services:
-    traefik:
-      image: traefik:latest
-      ports:
-        - 80:80
-        - 443:443
-      restart: always
-      labels:
-        - traefik.enable=true
-        - traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080
-        ## configure http
-        - traefik.http.routers.traefik-dashboard-http.entrypoints=http
-        - traefik.http.routers.traefik-dashboard-http.rule=Host(`dash.codewiser.online`)
-        ## configure https
-        - traefik.http.routers.traefik-dashboard-https.entrypoints=https
-        - traefik.http.routers.traefik-dashboard-https.tls.certresolver=le
-        - traefik.http.routers.traefik-dashboard-https.rule=Host(`dash.codewiser.online`)
-        - traefik.http.routers.traefik-dashboard-https.service=api@internal
-        - traefik.http.routers.traefik-dashboard-https.tls=true
-        - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
-        - traefik.http.routers.traefik-dashboard-http.middlewares=https-redirect
-        - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
-        ## define common network for traefik and apps
-        - traefik.docker.network=towapp
-      volumes:
-        - traefik-public-certificates:/certificates
-        - /var/run/docker.sock:/var/run/docker.sock:ro
-      command:
-        - --providers.docker
-        - --api.insecure
-        - --providers.docker.exposedbydefault=false
-        - --entrypoints.http.address=:80
-        - --entrypoints.https.address=:443 # https
-        - --certificatesresolvers.le.acme.email=imbhaskaran@gmail.com # https
-        - --certificatesresolvers.le.acme.storage=/certificates/acme.json #ssl certificate storage
-        - --certificatesresolvers.le.acme.tlschallenge=true
-        
-        - --accesslog
-        - --log
-        - --api
-      networks:
-        - towapp
-  volumes:
-    traefik-public-certificates:
+services:
+
+  traefik:
+    image: traefik:latest
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080
+      ## configure http
+      - traefik.http.routers.traefik-dashboard-http.entrypoints=http
+      - traefik.http.routers.traefik-dashboard-http.rule=Host(`dash.codewiser.online`)
+      ## configure https
+      - traefik.http.routers.traefik-dashboard-https.entrypoints=https
+      - traefik.http.routers.traefik-dashboard-https.tls.certresolver=le
+      - traefik.http.routers.traefik-dashboard-https.rule=Host(`dash.codewiser.online`)
+      - traefik.http.routers.traefik-dashboard-https.service=api@internal
+      - traefik.http.routers.traefik-dashboard-https.tls=true
+      - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
+      - traefik.http.routers.traefik-dashboard-http.middlewares=https-redirect
+      - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
+      ## define common network for traefik and apps
+      - traefik.docker.network=towapp
+    volumes:
+      - traefik-public-certificates:/certificates
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command:
+      - --providers.docker
+      - --api.insecure
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443 # https
+      - --certificatesresolvers.le.acme.email=imbhaskaran@gmail.com # https
+      - --certificatesresolvers.le.acme.storage=/certificates/acme.json #ssl certificate storage
+      - --certificatesresolvers.le.acme.tlschallenge=true
+      
+      - --accesslog
+      - --log
+      - --api
+    networks:
+      - towapp
+volumes:
+  traefik-public-certificates:
 
 
-  networks:
-    towapp:
-      external: true
+networks:
+  towapp:
+    external: true
