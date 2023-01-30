@@ -34,7 +34,10 @@ services:
       - --entrypoints.https.address=:443 # https
       - --certificatesresolvers.le.acme.email=imbhaskaran@gmail.com # https
       - --certificatesresolvers.le.acme.storage=/certificates/acme.json #ssl certificate storage
-      - --certificatesresolvers.le.acme.tlschallenge=true
+      - --certificatesresolvers.lf.acme.tlschallenge=true
+      - --certificatesresolvers.lf.acme.email=imbhaskaran@gmail.com # https
+      - --certificatesresolvers.lf.acme.storage=/certificates/acme.json #ssl certificate storage
+      - --certificatesresolvers.lf.acme.tlschallenge=true
       - --accesslog
       - --log
       - --api
