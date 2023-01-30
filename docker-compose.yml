@@ -16,6 +16,7 @@ services:
       - traefik.http.routers.app-https.entrypoints=https
       - traefik.http.routers.app-https.rule=Host(`first.ibhaskar.com`)
       - traefik.http.routers.app-https.tls=true
+      - traefik.http.routers.app-https.tls.certresolver=le
       - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
       - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
       # Middleware to redirect HTTP to HTTPS
@@ -40,6 +41,7 @@ services:
       - traefik.http.routers.second.entrypoints=https
       - traefik.http.routers.app-https.rule=Host(`second.ibhaskar.com`)
       - traefik.http.routers.second.tls=true
+      - traefik.http.routers.app-https.tls.certresolver=le
       - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
       - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
       - traefik.docker.network=towapp
