@@ -11,7 +11,7 @@ services:
       - traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080
       - traefik.http.routers.traefik-dashboard-http.entrypoints=http
       - traefik.http.routers.traefik-dashboard-http.rule=Host(`dash.localhost`)
-      - traefik.docker.network=towapp
+      - traefik.docker.network=twoapp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     command:
@@ -23,10 +23,10 @@ services:
       - --log
       - --api
     networks:
-      - towapp
+      - twoapp
 volumes:
-  towapp-certificates:
+  twoapp-certificates:
 
 networks:
-  towapp:
+  twoapp:
     external: true

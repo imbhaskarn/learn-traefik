@@ -12,10 +12,10 @@ services:
       - traefik.http.services.app.loadbalancer.server.port=8081
       - traefik.http.routers.first.entrypoints=http
       - traefik.http.routers.first.rule=Host(`one.localhost`)
-      - traefik.docker.network=towapp
+      - traefik.docker.network=twoapp
     command: [ "node", "app.js" ]
     networks:
-      - towapp
+      - twoapp
 
   second:
     restart: always
@@ -30,11 +30,11 @@ services:
       - traefik.http.routers.second.entrypoints=http
       - traefik.http.routers.second.rule=Host(`two.localhost`)
 
-      - traefik.docker.network=towapp
+      - traefik.docker.network=twoapp
     command: [ "node", "server.js" ]
     networks:
-      - towapp
+      - twoapp
 
 networks:
-  towapp:
+  twoapp:
     external: true
