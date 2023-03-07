@@ -11,7 +11,7 @@ services:
       - api.insecure=true
       - traefik.http.services.app.loadbalancer.server.port=8081
       - traefik.http.routers.first.entrypoints=http
-      - traefik.http.routers.first.rule=Host(`one.codewiser.online`)
+      - traefik.http.routers.first.rule=Host(`one.localhost`)
       - traefik.docker.network=towapp
     command: [ "node", "app.js" ]
     networks:
@@ -28,7 +28,7 @@ services:
       - api.insecure=true
       - traefik.http.services.app.loadbalancer.server.port=8082
       - traefik.http.routers.second.entrypoints=http
-      - traefik.http.routers.second.rule=Host(`two.codewiser.online`)
+      - traefik.http.routers.second.rule=Host(`two.localhost`)
 
       - traefik.docker.network=towapp
     command: [ "node", "server.js" ]

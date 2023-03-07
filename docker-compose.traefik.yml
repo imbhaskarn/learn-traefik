@@ -10,7 +10,7 @@ services:
       - traefik.enable=true
       - traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080
       - traefik.http.routers.traefik-dashboard-http.entrypoints=http
-      - traefik.http.routers.traefik-dashboard-http.rule=Host(`dash.codewiser.online`)
+      - traefik.http.routers.traefik-dashboard-http.rule=Host(`dash.localhost`)
       - traefik.docker.network=towapp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
