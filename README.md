@@ -1,2 +1,1 @@
-# Welcome to Learn-Traefik repo
-This a small projects that show how to use traefik as reverse proxy. In this example I'm showing how to host two apps on same server.
+Welcome to the Learn-Traefik repository. This project showcases how to use Traefik as a reverse proxy. The example provided demonstrates how to host two applications on a single server. To run the project, please switch to the part_one branch. You will find two files: docker-compose.yml and docker-compose.traefik.yml. Prior to running these commands, create a network called towapp using the following command: docker network create towapp. Once done, execute the following commands to run the containers: docker compose -f docker-compose.traefik.yml up -d and docker compose up -d.
