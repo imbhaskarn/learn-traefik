@@ -2,9 +2,11 @@ services:
 
   traefik:
     image: traefik:latest
+    container_name: learn-traefik
     ports:
       - 80:80
       - 443:443
+      - 8080:8080
     restart: always
     labels:
       - traefik.enable=true
@@ -13,20 +15,21 @@ services:
       - traefik.http.routers.traefik-dashboard-http.entrypoints=http
       - traefik.http.routers.traefik-dashboard-http.rule=Host(`dash.codewiser.online`)
       ## configure https
-      - traefik.http.routers.traefik-dashboard-https.entrypoints=https
-      - traefik.http.routers.traefik-dashboard-https.tls.certresolver=le
-      - traefik.http.routers.traefik-dashboard-https.rule=Host(`dash.codewiser.online`)
-      - traefik.http.routers.traefik-dashboard-https.service=api@internal
-      - traefik.http.routers.traefik-dashboard-https.tls=true
-      - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
-      - traefik.http.routers.traefik-dashboard-http.middlewares=https-redirect
-      - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
+      # - traefik.http.routers.traefik-dashboard-https.entrypoints=https
+      # - traefik.http.routers.traefik-dashboard-https.tls.certresolver=le
+      # - traefik.http.routers.traefik-dashboard-https.rule=Host(`dash.codewiser.online`)
+      # - traefik.http.routers.traefik-dashboard-https.service=api@internal
+      # - traefik.http.routers.traefik-dashboard-https.tls=true
+      # - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
+      # - traefik.http.routers.traefik-dashboard-http.middlewares=https-redirect
+      # - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
       ## define common network for traefik and apps
-      - traefik.docker.network=towapp
+      - traefik.docker.network=traefik-proxy
     volumes:
       - traefik-public-certificates:/certificates
       - /var/run/docker.sock:/var/run/docker.sock:ro
     command:
+      - --api.insecure=true
       - --providers.docker
       - --api.insecure
       - --providers.docker.exposedbydefault=false
@@ -40,11 +43,27 @@ services:
       - --log
       - --api
     networks:
-      - towapp
+      - traefik-proxy
+  whoami:
+    container_name: whoami
+     # A container that exposes an API to show its IP address
+    image: containous/whoami
+     # We set a label to tell Traefik to assign a hostname to the new service
+    labels:
+       - traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)
+       - traefik.enable=true
+       - traefik.docker.network=traefik-proxy
+       - traefik.http.routers.whoami.entrypoints=http
+       - traefik.http.routers.whoami.rule=Host(`whoami.development.local`)
+       - accesslog
+       - log
+       - api
+    networks:
+      - traefik-proxy
 volumes:
   traefik-public-certificates:
 
 
 networks:
-  towapp:
+  traefik-proxy:
     external: true
