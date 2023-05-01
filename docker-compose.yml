@@ -7,30 +7,15 @@ services:
       context: ./first
       dockerfile: Dockerfile
     labels:
-      # Enable Traefik for this specific "backend" service
       - traefik.enable=true
-      # Define the port inside of the Docker service to use
-      - traefik.http.services.first.loadbalancer.server.port=8081
-      # Make Traefik use this domain in HTTP
-      - traefik.http.routers.first-http.entrypoints=http
-      - traefik.http.routers.first-http.rule=Host(`first.ibhaskar.com`)
-      # Use the traefik-public network (declared below)
-      # Make Traefik use this domain in HTTPS
-      - traefik.http.routers.first-https.entrypoints=https
-      - traefik.http.routers.first-https.rule=Host(`first.ibhaskar.com`)
-      - traefik.http.routers.first-https.tls=true
-      # Use the "le" (Let's Encrypt) resolver
-      - traefik.http.routers.first-https.tls.certresolver=le
-      # https-redirect middleware to redirect HTTP to HTTPS
-      - traefik.http.middlewares.first-https-redirect.redirectscheme.scheme=https
-      - traefik.http.middlewares.first-https-redirect.redirectscheme.permanent=true
-      # Middleware to redirect HTTP to HTTPS
-      - traefik.http.routers.first-http.middlewares=https-redirect
-      #- traefik.http.routers.app-https.middlewares=admin-auth
-      - traefik.docker.network=towapp
+      - api.insecure=true
+      - traefik.http.services.app.loadbalancer.server.port=8081
+      - traefik.http.routers.first.entrypoints=http
+      - traefik.http.routers.first.rule=Host(`one.localhost`)
+      - traefik.docker.network=twoapp
     command: [ "node", "app.js" ]
     networks:
-      - towapp
+      - twoapp
 
   second:
     restart: always
@@ -39,31 +24,17 @@ services:
       context: ./second
       dockerfile: Dockerfile
     labels:
-      # Enable Traefik for this specific "backend" service
       - traefik.enable=true
-      # Define the port inside of the Docker service to use
-      - traefik.http.services.second.loadbalancer.server.port=8082
-      # Make Traefik use this domain in HTTP
-      - traefik.http.routers.second-http.entrypoints=http
-      - traefik.http.routers.second-http.rule=Host(`second.ibhaskar.com`)
-      # Use the traefik-public network (declared below)
-      # Make Traefik use this domain in HTTPS
-      - traefik.http.routers.second-https.entrypoints=https
-      - traefik.http.routers.second-https.rule=Host(`second.ibhaskar.com`)
-      - traefik.http.routers.second-https.tls=true
-      # Use the "le" (Let's Encrypt) resolver
-      - traefik.http.routers.second-https.tls.certresolver=le
-      # https-redirect middleware to redirect HTTP to HTTPS
-      - traefik.http.middlewares.second-https-redirect.redirectscheme.scheme=https
-      - traefik.http.middlewares.second-https-redirect.redirectscheme.permanent=true
-      # Middleware to redirect HTTP to HTTPS
-      - traefik.http.routers.second-http.middlewares=https-redirect
-      #- traefik.http.routers.app-https.middlewares=admin-auth
-      - traefik.docker.network=towapp
+      - api.insecure=true
+      - traefik.http.services.app.loadbalancer.server.port=8082
+      - traefik.http.routers.second.entrypoints=http
+      - traefik.http.routers.second.rule=Host(`two.localhost`)
+
+      - traefik.docker.network=twoapp
     command: [ "node", "server.js" ]
     networks:
-      - towapp
+      - twoapp
 
 networks:
-  towapp:
+  twoapp:
     external: true
